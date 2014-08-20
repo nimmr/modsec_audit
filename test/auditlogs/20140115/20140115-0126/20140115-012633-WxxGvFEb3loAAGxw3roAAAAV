@@ -1,0 +1,31 @@
+--3cf39e37-A--
+[15/Jan/2014:01:26:33 +0100] WxxGvFEb3loAAGxw3roAAAAV 192.168.5.1 39843 10.10.10.2 80
+--3cf39e37-B--
+GET /134/ HTTP/1.1
+User-Agent: Mozilla/5.0 (compatible; AhrefsBot/5.0; +http://ahrefs.com/robot/)
+Accept: */*
+Accept-Encoding: deflate, gzip
+Host: url8.tld
+
+--3cf39e37-F--
+HTTP/1.1 200 OK
+Vary: Accept-Encoding,User-Agent
+Content-Encoding: gzip
+X-Powered-By: PleskLin
+Content-Length: 4614
+Content-Type: text/html; charset=utf-8
+
+--3cf39e37-H--
+Message: collections_remove_stale: Failed deleting collection (name "ip", key "192.168.100.1"): Internal error
+Apache-Handler: php5-script
+Stopwatch: 1389745571382972 21917724 (- - -)
+Stopwatch2: 1389745571382972 21917724; combined=42840371, p1=290, p2=34, p3=0, p4=0, p5=21420025, sr=152, sw=5959641, l=0, gc=15460381
+WAF: ModSecurity for Apache/2.7.5 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "ENABLED"
+
+--3cf39e37-K--
+SecAction "phase:1,id:150,nolog,pass,initcol:IP=%{REMOTE_ADDR},setvar:IP.TIMEOUT=864000"
+
+
+--3cf39e37-Z--

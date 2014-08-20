@@ -1,0 +1,41 @@
+--d81d2877-A--
+[27/Aug/2013:14:14:26 +0200] 0GJ7CFEb3loAAHsWZNgAAAAJ 192.168.1.3 58668 10.10.10.2 80
+--d81d2877-B--
+POST /advSearch/ HTTP/1.1
+Host: url2.tld
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://url2.tld/advSearch/?q=fds%40qqqqqqqqqqqqqqq.dk
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 36
+
+--d81d2877-C--
+qs=fds%40qqqqqqqqqqqqqq.com
+--d81d2877-F--
+HTTP/1.1 403 Forbidden
+Content-Length: 282
+Keep-Alive: timeout=5, max=1000
+Connection: Keep-Alive
+Content-Type: text/html; charset=iso-8859-1
+
+--d81d2877-H--
+Message:  [file "/etc/httpd/modsec/rules-first.conf"] [line "23"] [id "2011"] [msg "Blocked because of spam mail addr in post"] [data ""] Access denied with code 403 (phase 2). Pattern match "POST" at REQUEST_METHOD.
+Action: Intercepted (phase 2)
+Stopwatch: 1377605666372360 72442 (- - -)
+Stopwatch2: 1377605666372360 72442; combined=495, p1=250, p2=58, p3=0, p4=0, p5=98, sr=113, sw=89, l=0, gc=0
+WAF: ModSecurity for Apache/2.7.5 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "ENABLED"
+
+--d81d2877-K--
+SecAction "phase:1,id:150,nolog,pass,initcol:IP=%{REMOTE_ADDR},setvar:IP.TIMEOUT=864000"
+
+SecRule "ARGS" "@rx \\@.*[qwrtpsdfghjklzxcvbnm]{5,}.*\\.com$" "phase:2,log,chain,deny,id:2011,t:lowercase,logdata:%{TX.0},msg:'Blocked because of spam mail addr in post'"
+SecRule "SERVER_NAME" "@rx url2.\\.tld$" "chain"
+SecRule "REQUEST_METHOD" "@rx POST" "setvar:ip.spambots=1,expirevar:ip.spambots=864000"
+
+
+--d81d2877-Z--

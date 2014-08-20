@@ -1,0 +1,32 @@
+--c87b594c-A--
+[15/Jan/2014:16:39:53 +0100] HsH04lEb3loAAEoCCXUAAAAk 192.168.11.1 21409 10.10.10.2 80
+--c87b594c-B--
+GET /company/s/malta.jpg HTTP/1.1
+Host: url9.tld
+Connection: close
+User-Agent: Baiduspider-image+(+http://www.baidu.com/search/spider.htm)
+Accept-Encoding: gzip
+Accept: */*
+
+--c87b594c-F--
+HTTP/1.1 404 Not Found
+Content-Length: 330
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+--c87b594c-H--
+Message:  [file "/etc/httpd/modsec/rules-first.conf"] [line "71"] [id "2002"] Access denied with code 404 (phase 2). Matched phrase "Baidu" at REQUEST_HEADERS:User-Agent.
+Action: Intercepted (phase 2)
+Stopwatch: 1389800393405666 2880 (- - -)
+Stopwatch2: 1389800393405666 2880; combined=785, p1=472, p2=30, p3=0, p4=0, p5=146, sr=237, sw=137, l=0, gc=0
+WAF: ModSecurity for Apache/2.7.5 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "ENABLED"
+
+--c87b594c-K--
+SecAction "phase:1,id:150,nolog,pass,initcol:IP=%{REMOTE_ADDR},setvar:IP.TIMEOUT=864000"
+
+SecRule "REQUEST_HEADERS:User-Agent" "@pmFromFile ban_user_agents.data" "phase:2,log,id:2002,t:none,t:lowercase,status:404,deny"
+
+
+--c87b594c-Z--

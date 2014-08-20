@@ -1,0 +1,32 @@
+--3cf39e37-A--
+[15/Jan/2014:01:26:43 +0100] WykqXFEb3loAAFtmZIYAAAAS 192.168.9.1 5442 10.10.10.2 80
+--3cf39e37-B--
+GET /company/s/logo.png HTTP/1.1
+Host: url9.tld
+Connection: close
+User-Agent: Baiduspider-image+(+http://www.baidu.com/search/spider.htm)
+Accept-Encoding: gzip
+Accept: */*
+
+--3cf39e37-F--
+HTTP/1.1 404 Not Found
+Content-Length: 332
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+--3cf39e37-H--
+Message:  [file "/etc/httpd/modsec/rules-first.conf"] [line "71"] [id "2002"] Access denied with code 404 (phase 2). Matched phrase "Baidu" at REQUEST_HEADERS:User-Agent.
+Action: Intercepted (phase 2)
+Stopwatch: 1389745572227676 31631577 (- - -)
+Stopwatch2: 1389745572227676 31631577; combined=63259204, p1=287, p2=25, p3=0, p4=0, p5=31629447, sr=151, sw=5534575, l=0, gc=26094870
+WAF: ModSecurity for Apache/2.7.5 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "ENABLED"
+
+--3cf39e37-K--
+SecAction "phase:1,id:150,nolog,pass,initcol:IP=%{REMOTE_ADDR},setvar:IP.TIMEOUT=864000"
+
+SecRule "REQUEST_HEADERS:User-Agent" "@pmFromFile ban_user_agents.data" "phase:2,log,id:2002,t:none,t:lowercase,status:404,deny"
+
+
+--3cf39e37-Z--

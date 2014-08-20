@@ -1,0 +1,2 @@
+Working dir, audit logs will be stored, and when a comlete month of them is
+here, they will be compressed and moved to archive

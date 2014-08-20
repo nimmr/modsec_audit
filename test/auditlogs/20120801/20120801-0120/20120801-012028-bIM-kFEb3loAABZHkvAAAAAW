@@ -1,0 +1,36 @@
+--dda50c27-A--
+[01/Aug/2012:01:20:28 +0200] bIM-kFEb3loAABZHkvAAAAAW 192.168.1.1 53326 10.10.10.2 443
+--dda50c27-B--
+GET /uploads/pics/pic.jpg HTTP/1.1
+Accept: image/png, image/svg+xml, image/*;q=0.8, */*;q=0.5
+Referer: https://sub.url1.tld/url1
+Accept-Language: da-DK
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+UA-CPU: AMD64
+Accept-Encoding: gzip, deflate
+Host: sub.url1.tld
+Connection: Keep-Alive
+
+--dda50c27-F--
+HTTP/1.1 200 OK
+Last-Modified: Wed, 15 Jun 2011 09:23:19 GMT
+ETag: "1a50bdd-10ef-b3fd4fc0"
+Accept-Ranges: bytes
+Content-Length: 4335
+X-Powered-By: PleskLin
+Keep-Alive: timeout=5, max=997
+Connection: Keep-Alive
+Content-Type: image/jpeg
+
+--dda50c27-H--
+Message: Failed to access DBM file "/var/lib/modsec/data/IP": Permission denied
+Stopwatch: 1343776828374928 1016 (- - -)
+Stopwatch2: 1343776828374928 1016; combined=346, p1=52, p2=3, p3=1, p4=3, p5=144, sr=34, sw=0, l=0, gc=143
+WAF: ModSecurity for Apache/2.6.1 (http://www.modsecurity.org/).
+Server: Apache
+
+--dda50c27-K--
+SecAction "phase:1,nolog,pass,initcol:IP=%{REMOTE_ADDR}"
+
+
+--dda50c27-Z--

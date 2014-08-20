@@ -1,0 +1,31 @@
+--3f10753b-A--
+[13/Jan/2014:00:01:09 +0100] 71E6u1Eb3loAAEOzFVcAAAAr 192.168.3.1 47407 10.10.10.2 80
+--3f10753b-B--
+GET /robots.txt HTTP/1.0
+Connection: close
+Host: url5.tld
+User-Agent: Mozilla/5.0 (compatible; MJ12bot/v1.4.4; http://www.majestic12.co.uk/bot.php?+)
+Accept: */*
+
+--3f10753b-F--
+HTTP/1.1 404 Not Found
+Content-Length: 284
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+--3f10753b-H--
+Message:  [file "/etc/httpd/modsec/rules-first.conf"] [line "71"] [id "2002"] Access denied with code 404 (phase 2). Matched phrase "MJ12bot" at REQUEST_HEADERS:User-Agent.
+Action: Intercepted (phase 2)
+Stopwatch: 1389567669254843 102443 (- - -)
+Stopwatch2: 1389567669254843 102443; combined=562, p1=286, p2=28, p3=0, p4=0, p5=128, sr=123, sw=120, l=0, gc=0
+WAF: ModSecurity for Apache/2.7.5 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "ENABLED"
+
+--3f10753b-K--
+SecAction "phase:1,id:150,nolog,pass,initcol:IP=%{REMOTE_ADDR},setvar:IP.TIMEOUT=864000"
+
+SecRule "REQUEST_HEADERS:User-Agent" "@pmFromFile ban_user_agents.data" "phase:2,log,id:2002,t:none,t:lowercase,status:404,deny"
+
+
+--3f10753b-Z--

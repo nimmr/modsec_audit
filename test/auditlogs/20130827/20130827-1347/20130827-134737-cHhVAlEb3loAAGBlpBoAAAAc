@@ -1,0 +1,35 @@
+--9f018165-A--
+[27/Aug/2013:13:47:37 +0200] cHhVAlEb3loAAGBlpBoAAAAc 192.168.1.3 58136 10.10.10.2 80
+--9f018165-B--
+GET /?UBFSB=1 HTTP/1.1
+Host: url12.tld
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+--9f018165-F--
+HTTP/1.1 302 Found
+Location: http://url4.tld/unblocked.html
+Content-Length: 275
+Keep-Alive: timeout=5, max=1000
+Connection: Keep-Alive
+Content-Type: text/html; charset=iso-8859-1
+
+--9f018165-H--
+Message:  [file "/etc/httpd/modsec/rules-first.conf"] [line "7"] [id "2000"] [msg "Unbanned from server"] Access denied with redirection to http://url4.tld/unblocked.html using status 302 (phase 2). Pattern match "1" at ARGS:UBFSB.
+Action: Intercepted (phase 2)
+Stopwatch: 1377604057191682 2007 (- - -)
+Stopwatch2: 1377604057191682 2007; combined=413, p1=229, p2=34, p3=0, p4=0, p5=80, sr=96, sw=70, l=0, gc=0
+WAF: ModSecurity for Apache/2.7.5 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "ENABLED"
+
+--9f018165-K--
+SecAction "phase:1,id:150,nolog,pass,initcol:IP=%{REMOTE_ADDR},setvar:IP.TIMEOUT=864000"
+
+SecRule "ARGS:UBFSB" "@rx 1" "phase:2,id:2000,log,msg:'Unbanned from server',setvar:!ip.spambots,redirect:http://url4.tld/unblocked.html"
+
+
+--9f018165-Z--

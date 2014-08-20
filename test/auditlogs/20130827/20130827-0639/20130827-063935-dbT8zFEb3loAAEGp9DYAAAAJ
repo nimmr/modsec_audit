@@ -1,0 +1,31 @@
+--c4813317-A--
+[27/Aug/2013:06:39:35 +0200] dbT8zFEb3loAAEGp9DYAAAAJ 192.168.2.1 4259 10.10.10.2 80
+--c4813317-B--
+GET /kommentarer/?tx_veguestbook_pi1%5Bfirstname%5D=ewokoxuv&tx_veguestbook_pi1%5Bsurname%5D=ohawenot&tx_veguestbook_pi1%5Bemail%5D=olelautet%40superfinancejobs.org&tx_veguestbook_pi1%5Bhomepage%5D=http%3A%2F%2Fozicyusdeh.com%2F&tx_veguestbook_pi1%5Bsubmitted%5D=1&tx_veguestbook_pi1%5Bentry%5D=%3Ca%20href%3Dhttp%3A%2F%2Fonfogiromuu.com%2F%3Eubeibuve%3C%2Fa%3E%20%3Ca%20href%3D%22http%3A%2F%2Fonfogiromua.com%2F%22%3Erejobcox%3C%2Fa%3E%20http%3A%2F%2Fonfogiromut.com%2F&tx_veguestbook_pi1%5Bpointer%5D=1 HTTP/1.0
+Accept: image/gif, image/jpeg, image/pjpeg, application/x-ms-application, application/vnd.ms-xpsdocument, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*
+User-Agent: Opera/9.80 (Windows NT 6.1; MRA 6.0 (build 5970)) Presto/2.12.388 Version/12.10
+Referer: http://url5.tld/kommentarer/?tx_veguestbook_pi1%5Bfirstname%5D=ewokoxuv&tx_veguestbook_pi1%5Bsurname%5D=ohawenot&tx_veguestbook_pi1%5Bemail%5D=olelautet%40superfinancejobs.org&tx_veguestbook_pi1%5Bhomepage%5D=http%3A%2F%2Fozicyusdeh.com%2F&tx_veguestbook_pi1%5Bsubmitted%5D=1&tx_veguestbook_pi1%5Bentry%5D=%3Ca%20href%3Dhttp%3A%2F%2Fonfogiromuu.com%2F%3Eubeibuve%3C%2Fa%3E%20%3Ca%20href%3D%22http%3A%2F%2Fonfogiromua.com%2F%22%3Erejobcox%3C%2Fa%3E%20http%3A%2F%2Fonfogiromut.com%2F&tx_veguestbook_pi1%5Bpointer%5D=1
+Host: url5.tld
+
+--c4813317-F--
+HTTP/1.1 302 Found
+Location: http://url4.tld/blocked.html
+Content-Length: 292
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+--c4813317-H--
+Message:  [file "/etc/httpd/modsec/rules-first.conf"] [line "35"] [id "2050"] [msg "Spam blocked for 10 days"] Access denied with redirection to http://url4.tld/blocked.html using status 302 (phase 2). Operator EQ matched 1 at IP:spambots.
+Action: Intercepted (phase 2)
+Stopwatch: 1377578375249100 33367 (- - -)
+Stopwatch2: 1377578375249100 33367; combined=275, p1=196, p2=69, p3=0, p4=0, p5=9, sr=96, sw=1, l=0, gc=0
+WAF: ModSecurity for Apache/2.6.6 (http://www.modsecurity.org/).
+Server: Apache
+
+--c4813317-K--
+SecAction "phase:1,nolog,pass,initcol:IP=%{REMOTE_ADDR}"
+
+SecRule "IP:SPAMBOTS" "@eq 1" "phase:2,id:2050,log,status:404,msg:'Spam blocked for 10 days',redirect:http://url4.tld/blocked.html"
+
+
+--c4813317-Z--

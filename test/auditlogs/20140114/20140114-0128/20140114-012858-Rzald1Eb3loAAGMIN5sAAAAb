@@ -1,0 +1,33 @@
+--fb455e59-A--
+[14/Jan/2014:01:28:58 +0100] Rzald1Eb3loAAGMIN5sAAAAb 192.168.3.1 59359 10.10.10.2 80
+--fb455e59-B--
+GET /no_cache/69/?tx_ttnews%5BcalendarYear%5D=2010 HTTP/1.0
+Connection: close
+Host: url7.tld
+User-Agent: Mozilla/5.0 (compatible; MJ12bot/v1.4.4; http://www.majestic12.co.uk/bot.php?+)
+Accept: text/html,text/plain,text/xml,text/*,application/xml,application/xhtml+xml,application/rss+xml,application/atom+xml,application/rdf+xml
+Accept-Encoding: gzip
+Accept-Language: da
+
+--fb455e59-F--
+HTTP/1.1 404 Not Found
+Content-Length: 289
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+--fb455e59-H--
+Message:  [file "/etc/httpd/modsec/rules-first.conf"] [line "71"] [id "2002"] Access denied with code 404 (phase 2). Matched phrase "MJ12bot" at REQUEST_HEADERS:User-Agent.
+Action: Intercepted (phase 2)
+Stopwatch: 1389659338220919 2254 (- - -)
+Stopwatch2: 1389659338220919 2254; combined=585, p1=280, p2=39, p3=0, p4=0, p5=138, sr=143, sw=128, l=0, gc=0
+WAF: ModSecurity for Apache/2.7.5 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "ENABLED"
+
+--fb455e59-K--
+SecAction "phase:1,id:150,nolog,pass,initcol:IP=%{REMOTE_ADDR},setvar:IP.TIMEOUT=864000"
+
+SecRule "REQUEST_HEADERS:User-Agent" "@pmFromFile ban_user_agents.data" "phase:2,log,id:2002,t:none,t:lowercase,status:404,deny"
+
+
+--fb455e59-Z--
