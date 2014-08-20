@@ -19,6 +19,7 @@ settings = {
     'mkdir.mode' : 0750, # only when applicable
 
     'db'                        : {
+        'prefix'                : 'modsec_',
         'connection_string'     : 'mysql://root@127.0.0.1/system',
     }
 }

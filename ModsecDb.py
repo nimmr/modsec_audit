@@ -12,8 +12,16 @@ from sqlalchemy import ForeignKey
 from datetime import datetime
 import Benchmarking
 import ModsecAudit
+from settings import settings
 
 Base = declarative_base()
+
+if 'db' in settings and 'prefix' in settings['db']:
+    table_prefix = settings['db']['prefix']
+else:
+    table_prefix = ''
+
+
 
 class ModsecDb:
 
@@ -233,7 +241,7 @@ class ModsecDb:
 
 class Site(Base):
 
-    __tablename__ = 'modsec_site'
+    __tablename__ = table_prefix + 'site'
 
     id = Column(Integer, primary_key=True)
     site = Column(String)
@@ -251,7 +259,7 @@ class Site(Base):
 
 class Ip(Base):
 
-    __tablename__ = 'modsec_ip'
+    __tablename__ = table_prefix + 'ip'
 
     id = Column(Integer, primary_key=True)
     ip = Column(String)
@@ -262,7 +270,7 @@ class Ip(Base):
 
 class RunStatus(Base):
 
-    __tablename__ = 'modsec_runstatus'
+    __tablename__ = table_prefix + 'runstatus'
 
     id          = Column(Integer, primary_key=True)
     run_date    = Column(DateTime)
@@ -277,7 +285,7 @@ class RunStatus(Base):
 
 class Hit(Base):
 
-    __tablename__ = 'modsec_hit'
+    __tablename__ = table_prefix + 'hit'
 
     uniq = Column(String, primary_key=True)
     site_id = Column(Integer, ForeignKey('modsec_site.id'))
@@ -297,7 +305,7 @@ class Hit(Base):
 
 class ParseError(Base):
 
-    __tablename__ = 'modsec_parse_error'
+    __tablename__ = table_prefix + 'parse_error'
 
     id              = Column(Integer, primary_key=True)
     runstatus_id    = Column(Integer, ForeignKey('modsec_runstatus.id'))
