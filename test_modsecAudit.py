@@ -6,24 +6,41 @@ from ModsecDb import Hit, Ip, RunStatus, Site, ParseError
 from settings import settings
 import shutil
 
-__author__ = 'tl'
+__author__ = 'Tim Lund <code@nimmr.dk>'
 
 
 class TestModsecAudit(TestCase):
 
     def test_settings_missing(self):
 
-        with self.assertRaises(ModsecException) as ctx:
-            ms = ModsecAudit()
+        # This is more correct code, but requires 2.7
+        #
+        # with self.assertRaises(ModsecException) as ctx:
+        #     ms = ModsecAudit()
+        #
+        # self.assertEqual(ModsecException.ERR_CFG_MISSING, ctx.exception.get_code())
 
-        self.assertEqual(ModsecException.ERR_CFG_MISSING, ctx.exception.get_code())
+        try:
+            ms = ModsecAudit()
+        except ModsecException, e:
+            pass
+
+        # first in 2.7
+        # self.assertIsInstance(e, ModsecException)
+
+        self.assertTrue(isinstance(e, ModsecException))
+        self.assertEqual(ModsecException.ERR_CFG_MISSING, e.get_code())
+
 
     def test_settings_incomplete(self):
 
-        with self.assertRaises(ModsecException) as ctx:
+        try:
             ms = ModsecAudit(settings={ 'blah' : 1 })
+        except ModsecException, e:
+            pass
 
-        self.assertEqual(ModsecException.ERR_CFG_INCOMPLETE, ctx.exception.get_code())
+        self.assertTrue(isinstance(e, ModsecException))
+        self.assertEqual(ModsecException.ERR_CFG_INCOMPLETE, e.get_code())
 
 
     def test_no_spaces_on_folder(self):
@@ -36,10 +53,13 @@ class TestModsecAudit(TestCase):
             }
         }
 
-        with self.assertRaises(ModsecException) as ctx:
-            ms = ModsecAudit(settings=s)
+        try:
+             ms = ModsecAudit(settings=s)
+        except ModsecException, e:
+            pass
 
-        self.assertEqual(ModsecException.ERR_CFG_NO_SPACES_IN_FOLDER, ctx.exception.get_code())
+        self.assertTrue(isinstance(e, ModsecException))
+        self.assertEqual(ModsecException.ERR_CFG_NO_SPACES_IN_FOLDER, e.get_code())
 
 
     def test_folder_cannot_be_slash(self):
@@ -52,10 +72,13 @@ class TestModsecAudit(TestCase):
             }
         }
 
-        with self.assertRaises(ModsecException) as ctx:
-            ms = ModsecAudit(settings=s)
+        try:
+             ms = ModsecAudit(settings=s)
+        except ModsecException, e:
+            pass
 
-        self.assertEqual(ModsecException.ERR_CFG_FOLDER_NOT_ROOT, ctx.exception.get_code())
+        self.assertTrue(isinstance(e, ModsecException))
+        self.assertEqual(ModsecException.ERR_CFG_FOLDER_NOT_ROOT, e.get_code())
 
 
     def test_folder_cannot_be_root_win_drive(self):
@@ -68,10 +91,13 @@ class TestModsecAudit(TestCase):
             }
         }
 
-        with self.assertRaises(ModsecException) as ctx:
-            ms = ModsecAudit(settings=s)
+        try:
+             ms = ModsecAudit(settings=s)
+        except ModsecException, e:
+            pass
 
-        self.assertEqual(ModsecException.ERR_CFG_FOLDER_NOT_ROOT, ctx.exception.get_code())
+        self.assertTrue(isinstance(e, ModsecException))
+        self.assertEqual(ModsecException.ERR_CFG_FOLDER_NOT_ROOT, e.get_code())
 
 
     def test_verify_test_run(self):
@@ -84,7 +110,7 @@ class TestModsecAudit(TestCase):
 
         self.remove_archive_folders()
 
-        ma = ModsecAudit(verbose=True, settings=settings)
+        ma = ModsecAudit(verbose=False, settings=settings)
         ma.set_exit_on_end(False)
         ma.init_db()
 
@@ -178,7 +204,7 @@ class TestModsecAudit(TestCase):
         # modsec_id's
 
         counts = session.execute(
-            "select modsec_id, count(*) as cnt from {} group by modsec_id".format(Hit.__tablename__)
+            "select modsec_id, count(*) as cnt from {0} group by modsec_id".format(Hit.__tablename__)
         )
 
         d = {}

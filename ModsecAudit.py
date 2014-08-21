@@ -10,7 +10,7 @@ import tarfile
 import bz2
 from sys import stderr
 
-__author__ = 'nimmr'
+__author__ = 'Tim Lund <code@nimmr.dk>'
 
 class ModsecAudit(CliScript):
 
@@ -300,11 +300,11 @@ class ModsecAudit(CliScript):
 
             inner_msg = ''
             for key in errors:
-                inner_msg += "\tSection {}: {}\n".format(key, errors[key].message)
+                inner_msg += "\tSection {0}: {1}\n".format(key, errors[key].get_message())
 
             self.log(
                 self.LOG_WARN,
-                "Could not match section(s) '{}' in auditlog: '{}'.\nError(s):\n{}".format(
+                "Could not match section(s) '{0}' in auditlog: '{1}'.\nError(s):\n{2}".format(
                     ', '.join(errors.keys()),
                     filename,
                     inner_msg

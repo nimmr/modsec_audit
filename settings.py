@@ -4,7 +4,7 @@ import os
 # This settings file is for unit tests.
 #
 
-__author__ = 'tl'
+__author__ = 'Tim Lund <code@nimmr.dk>'
 
 settings = {
 

@@ -1,6 +1,10 @@
 from __future__ import print_function
-from collections import OrderedDict
-__author__ = 'tl'
+try:
+    from collections import OrderedDict
+except:
+    from ordereddict import OrderedDict
+
+__author__ = 'Tim Lund <code@nimmr.dk>'
 
 import time
 

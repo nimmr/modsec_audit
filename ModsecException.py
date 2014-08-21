@@ -1,4 +1,4 @@
-__author__ = 'tl'
+__author__ = 'Tim Lund <code@nimmr.dk>'
 
 
 class ModsecException(Exception):
@@ -22,12 +22,12 @@ class ModsecException(Exception):
 
     ER = {
         ERR_CFG_MISSING                 : "Cannot find settings.py",
-        ERR_CFG_INCOMPLETE              : "Settings for this program is incomplete. Missing key: '{}'",
-        ERR_CFG_NO_SPACES_IN_FOLDER     : "There is a space in the folder '{}': value '{}'",
-        ERR_CFG_FOLDER_NOT_ROOT         : "Config folder '{}' cannot be '/'",
-        ERR_CFG_NOT_A_FOLDER            : "Config folder '{}' is not a folder: '{}'",
+        ERR_CFG_INCOMPLETE              : "Settings for this program is incomplete. Missing key: '{0}'",
+        ERR_CFG_NO_SPACES_IN_FOLDER     : "There is a space in the folder '{0}': value '{1}'",
+        ERR_CFG_FOLDER_NOT_ROOT         : "Config folder '{0}' cannot be '/'",
+        ERR_CFG_NOT_A_FOLDER            : "Config folder '{0}' is not a folder: '{0}'",
 
-        ERR_PARSING_AUDIT_LOG           : "Could not parse section(s): '{}' in audit log: '{}'",
+        ERR_PARSING_AUDIT_LOG           : "Could not parse section(s): '{0}' in audit log: '{1}'",
     }
 
     code = 0
@@ -36,6 +36,8 @@ class ModsecException(Exception):
     #
     #
     def __init__(self, message=None, code=None, *error_params):
+
+        self.message = ''
 
         if code:
             self.code = code
@@ -54,5 +56,11 @@ class ModsecException(Exception):
         return self.code
 
 
+    def get_message(self):
+        """
+
+        :return:
+        """
+        return self.message
 
 

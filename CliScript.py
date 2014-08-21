@@ -4,7 +4,7 @@ import Benchmarking
 import os
 import sys
 
-__author__ = 'tl'
+__author__ = 'Tim Lund <code@nimmr.dk>'
 
 
 class CliScript(object):
@@ -118,10 +118,10 @@ class CliScript(object):
 
         :param key: string
         """
-        if not key in self._counters:
-            raise Exception('The key {} dosn\'t exist in counters'.format(key))
-
-        return self._counters[key]
+        if key in self._counters:
+            return self._counters[key]
+        else:
+            return 0
 
 
     def counter(self, key, val=1):

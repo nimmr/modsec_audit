@@ -3,7 +3,7 @@ from settings import settings
 import traceback
 import sys
 
-__author__ = 'tl'
+__author__ = 'Tim Lund <code@nimmr.dk>'
 
 ma = ModsecAudit(verbose=True, settings=settings)
 
@@ -16,7 +16,7 @@ except Exception, e:
 
     ma.print_color("An error occurred:", ma.COLOR_RED)
     ma.print_color("\t" + str(e.__class__), ma.COLOR_RED)
-    ma.print_color("\t" + e.message, ma.COLOR_RED)
+    ma.print_color("\t" + e.get_message(), ma.COLOR_RED)
 
     traceback.print_tb(sys.exc_traceback)
 

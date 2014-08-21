@@ -2,7 +2,7 @@ import re
 from ModsecException import ModsecException
 import bz2
 
-__author__ = 'tl'
+__author__ = 'Tim Lund <code@nimmr.dk>'
 
 
 class Sections:
@@ -54,7 +54,7 @@ class Sections:
 
 
     def __repr__(self):
-        return "Section(a={}, b={}, h={})".format(
+        return "Section(a={0}, b={1}, h={2})".format(
             self.a, self.b, self.h
         )
 
@@ -97,7 +97,7 @@ class A:
 
 
     def __repr__(self):
-        return "A(uniq='{} 'remote_id='{}', server_ip='{}')".format(
+        return "A(uniq='{0} 'remote_id='{1}', server_ip='{2}')".format(
             self.uniq, self.remote_ip, self.server_ip
         )
 
@@ -135,7 +135,7 @@ class B:
 
 
     def __repr__(self):
-        return "B(host='{}', url='{}', site='{}')".format(self.host, self.url, self.site)
+        return "B(host='{0}', url='{1}', site='{2}')".format(self.host, self.url, self.site)
 
 
 # class F:
@@ -184,7 +184,7 @@ class H:
 
 
     def __repr__(self):
-        return "H(message='{}', id={})".format(self.message, self.id)
+        return "H(message='{0}', id={1})".format(self.message, self.id)
 
 #
 # class K:
