@@ -40,7 +40,6 @@ class ModsecDb:
         self.engine = create_engine(self.settings['connection_string'])
         self.run_status = None
         """:type: RunStatus"""
-
         self.site_cache = dict()
         self.ip_cache = dict()
         self.timers = modsec.timers
