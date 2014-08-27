@@ -105,8 +105,8 @@ class ModsecDb:
             total_count=0
         )
 
-        # self._add_and_commit(site)
-        self.session.add(site)
+        self._add_and_commit(site)
+        # self.session.add(site)
         self.timers.toggle_timer('db.create_site.new_site')
 
         return site
@@ -158,8 +158,7 @@ class ModsecDb:
     def create_hit(self, uniq, site, ip, at, modsec_id, contents):
         """
         :param uniq: string
-        :param site_id: int
-        :param ip_id: int
+        :param ip: int
         :param at: datetime
         :param modsec_id: int
         :param contents: str
@@ -179,9 +178,11 @@ class ModsecDb:
         )
 
 
-        self.session.add(hit)
-        # self._add_and_commit(hit)
+        # self.session.add(hit)
+        self._add_and_commit(hit)
         self.timers.toggle_timer('db.create_hit.new_hit')
+
+        print('Added hit: ', hit.uniq)
 
         return hit
 
@@ -196,7 +197,9 @@ class ModsecDb:
         """
 
         pe = ParseError(runstatus_id=runstatus_id, file=file, message=message, contents=contents)
-        self.session.add(pe)
+
+        # self.session.add(pe)
+        self._add_and_commit(pe)
 
         return pe
 
