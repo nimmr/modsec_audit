@@ -1,0 +1,36 @@
+--07812950-A--
+[21/Sep/2012:14:15:52 +0200] M2JVn1Eb3loAAF0jYaMAAAAB 192.168.1.2 44202 10.10.10.2 80
+--07812950-B--
+GET /advSearch/?r=1388 HTTP/1.1
+Host: url2.tld
+Connection: close
+User-Agent: Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+Accept-Encoding: gzip
+Accept-Language: en-US
+Accept: */*
+
+--07812950-F--
+HTTP/1.1 200 OK
+Vary: Accept-Encoding,User-Agent
+Content-Encoding: gzip
+X-Powered-By: PleskLin
+Content-Length: 12788
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+--07812950-H--
+Message:  [file "/etc/httpd/modsec/rules-first.conf"] [line "30"] [id "2002"] Warning. Matched phrase "Baidu" at REQUEST_HEADERS:User-Agent.
+Apache-Error: [file "/builddir/build/BUILD/php-5.2.17/sapi/apache2handler/sapi_apache2.c"] [line 297] [level 3] PHP Warning:  uasort() [<a href='function.uasort'>function.uasort</a>]: The argument should be an array in /httpdocs/search.class.php on line 424
+Apache-Handler: php5-script
+Stopwatch: 1348229751002527 733725 (- - -)
+Stopwatch2: 1348229751002527 733725; combined=339, p1=320, p2=8, p3=0, p4=0, p5=10, sr=72, sw=1, l=0, gc=0
+WAF: ModSecurity for Apache/2.6.6 (http://www.modsecurity.org/).
+Server: Apache
+
+--07812950-K--
+SecAction "phase:1,nolog,pass,initcol:IP=%{REMOTE_ADDR}"
+
+SecRule "REQUEST_HEADERS:User-Agent" "@pmFromFile ban_user_agents.data" "phase:1,log,id:2002,t:none,t:lowercase,status:404,block"
+
+
+--07812950-Z--

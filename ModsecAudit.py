@@ -210,7 +210,7 @@ class ModsecAudit(CliScript):
                 else:
                     self.counter('main.parsed')
                     # print(sections)
-                    self.process_sections(odate, sections)
+                    self.process_sections(odate, filename, sections)
 
                 # @todo change to move
                 shutil.copy2(filename, os.path.join(inner_path, os.path.basename(filename)))
@@ -323,7 +323,7 @@ class ModsecAudit(CliScript):
         return parsed_sections
 
 
-    def process_sections(self, at, sections):
+    def process_sections(self, at, filename, sections):
         """
 
         :param at: datetime
@@ -346,6 +346,21 @@ class ModsecAudit(CliScript):
             sections.h.id,
             sections.compressed_audit_contents
         )
+
+        if not hit:
+
+            msg = "Duplicate uniq '{0}' in auditlog: '{1}'".format(
+                sections.a.uniq, filename
+            )
+
+            self.db.create_parse_error(
+                runstatus_id=self.db.run_status.id,
+                file= "/".join(filename.split('/')[-3:]),
+                message=msg,
+                contents=sections.compressed_audit_contents
+            )
+
+            self.log(self.LOG_WARN, msg)
 
         self.timers.toggle_timer('process_sections')
 

@@ -19,25 +19,35 @@ class Sections:
 
         self.compressed_audit_contents = None
 
-        try:
-            self.a = A.create_from_string(sections['A'])
-        except ModsecException, e:
-            self.errors['A'] = e
+        if 'A' in sections:
+            try:
+                self.a = A.create_from_string(sections['A'])
+            except ModsecException, e:
+                self.errors['A'] = e
+        else:
+            self.errors['A'] = ModsecException("Section A not present in audit log")
 
-        try:
-            self.b = B.create_from_string(sections['B'])
-        except ModsecException, e:
-            self.errors['B'] = e
+        if 'B' in sections:
+            try:
+                self.b = B.create_from_string(sections['B'])
+            except ModsecException, e:
+                self.errors['B'] = e
+        else:
+            self.errors['B'] = ModsecException("Section B not present in audit log")
+
 
         # try:
         #     self.f = F(sections['F'])
         # except ModsecException, e:
         #     self.errors.append('F')
 
-        try:
-            self.h = H.create_from_string(sections['H'])
-        except ModsecException, e:
-            self.errors['H'] = e
+        if 'H' in sections:
+            try:
+                self.h = H.create_from_string(sections['H'])
+            except ModsecException, e:
+                self.errors['H'] = e
+        else:
+            self.errors['H'] = ModsecException("Section H not present in audit log")
 
         # try:
         #     self.k = K(sections['K'])

@@ -11,6 +11,7 @@ settings = {
     'folders' : {
         # 'errorLogs'             :'/var/log/apache/',
         'auditLogs'     : os.path.join(os.path.dirname(__file__), 'test', 'auditlogs'),
+        # 'auditLogs'     : os.path.join(os.path.dirname(__file__), 'test', 'web3-auditlogs'),
         'archive'       : os.path.join(os.path.dirname(__file__), 'test', 'archive'),
         'workRoot'      : os.path.join(os.path.dirname(__file__), 'test', 'workdir'),
     },

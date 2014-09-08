@@ -4,7 +4,7 @@ from ModsecAudit import ModsecAudit
 from ModsecException import ModsecException
 from ModsecDb import Hit, Ip, RunStatus, Site, ParseError
 from settings import settings
-import shutil
+from sqlalchemy import func
 
 __author__ = 'Tim Lund <code@nimmr.dk>'
 
@@ -139,8 +139,10 @@ class TestModsecAudit(TestCase):
 
         self.assertEqual(1, len(rs))
         self.assertEqual('done', rs[0].status)
-        self.assertEqual(10, rs[0].parsed)
+        self.assertEqual(11, rs[0].parsed)
         self.assertEqual(3, rs[0].parse_errors)
+
+        self.assertEqual(1, ma.get_counter('db.create_hit.duplicates'))
 
 
     def check_sites(self, ma):
@@ -229,7 +231,7 @@ class TestModsecAudit(TestCase):
         session = ma.db.get_session()
 
         count = session.query(ParseError).count()
-        self.assertEqual(3, count)
+        self.assertEqual(4, count)
 
 
     #
@@ -248,6 +250,7 @@ class TestModsecAudit(TestCase):
 
         ma.db.delete_all()
 
+        # count with subqueries. This works on sqlalchemy v0.6
         self.assertEqual(0, session.query(Site.id).count(), "Table site not empty")
         self.assertEqual(0, session.query(Ip.id).count(), "Table ip not empty")
         self.assertEqual(0, session.query(Hit.uniq).count(), "Table hit not empty")

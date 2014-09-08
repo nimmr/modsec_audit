@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import ForeignKey
+from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 import Benchmarking
 import ModsecAudit
@@ -179,10 +180,18 @@ class ModsecDb:
 
 
         # self.session.add(hit)
-        self._add_and_commit(hit)
-        self.timers.toggle_timer('db.create_hit.new_hit')
+        try:
+            self._add_and_commit(hit)
+            self.timers.toggle_timer('db.create_hit.new_hit')
+        except IntegrityError, e:
+            if e.orig.args[0] == 1062:
+                self.modsec.counter('db.create_hit.duplicates')
+                self.session.rollback()
+                return
 
-        print('Added hit: ', hit.uniq)
+
+
+        # print('Added hit: ', hit.uniq)
 
         return hit
 
@@ -198,8 +207,8 @@ class ModsecDb:
 
         pe = ParseError(runstatus_id=runstatus_id, file=file, message=message, contents=contents)
 
-        # self.session.add(pe)
-        self._add_and_commit(pe)
+        self.session.add(pe)
+        # self._add_and_commit(pe)
 
         return pe
 
@@ -209,8 +218,9 @@ class ModsecDb:
         Commits the obj to the db immediately
         """
         self.session.add(obj)
+        # self.session.flush()
         self.session.commit()
-        self.session.flush()
+
 
 
     def delete_all(self):
